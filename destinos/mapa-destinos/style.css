@@ -1,0 +1,82 @@
+/* Estilos base */
+body {
+    background: rgb(255, 254, 253);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start; 
+    gap: 30px; 
+    margin-top: 20px;
+    padding: 20px;
+    flex-direction: row; 
+}
+
+/* Estilo del mapa */
+.mapadiv {
+    position: absolute;
+    top: 50px;right: 300px;
+    width: 50%; 
+    max-width: 500px; 
+    flex-shrink: 0; 
+    background-color: #ffffff; /* Fondo blanco */
+    
+}
+
+/* Contenedor de los botones */
+#botones-departamentos {
+    position: absolute;
+    top: 50px;left: 120px;
+    display: flex;
+    flex-direction: column; /* Botones en columna */
+    gap: 12px; /* Espacio entre botones */
+    padding: 10px;
+    background: #7ec1de;
+    border-radius: 12px;
+    box-shadow: 3px 3px 10px rgba(169, 0, 0, 0.15);
+    max-width: 250px; /* Ancho máximo de los botones */
+    flex-shrink: 0; /* Evita que los botones se encojan */
+    
+
+}
+
+/* Estilo base para los botones */
+.departamento-btn {
+    width: 100%; /* Ancho completo */
+    padding: 12px 15px;
+    border: none;
+    background-color: #DEF4E3;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+}
+
+.departamento-btn.highlight {
+    background-color: #afa7ae; 
+}
+
+.departamento-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Estilo base para los paths del mapa */
+.mapadiv path {
+    fill: #A0D175; 
+    stroke: #5d358b;
+    stroke-width: 5px;
+    transition: fill 0.3s ease;
+}
+
+/* Estilo cuando un path está resaltado */
+.mapadiv path.highlight {
+    fill: #56af31 !important;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiencias</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Contenedor de fondo dinámico -->
+    <div class="absolute w-full h-full left-0 top-0 bg-overlay">
+        <div class="bg-cover bg-center bg-no-repeat w-full h-full" id="background-image"></div>
+    </div>
+
+    <!-- Caja de navegación -->
+    <div class="caja-navegacion">
+        <div class="botones">
+            <!-- Botón Aventura -->
+            <div class="boton-container">
+                <a href="#" class="boton" data-bg="aventura3.jpg">Aventura</a>
+                <ul class="submenu submenu-right">
+                    <li><a href="https://www.scribd.com/doc/276843470/Menu-Desplegable-Con-CSS-y-HTML">Descenso en bicicleta</a></li>
+                    <li><a href="#">Escalada</a></li>
+                    <li><a href="#">Trekking</a></li>
+                </ul>
+            </div>
+
+            <!-- Botón Culturas -->
+            <div class="boton-container">
+                <a href="actividades.html" class="boton" data-bg="cultura3.jpg">Culturas</a>
+                <ul class="submenu submenu-left">
+                    <li><a href="#">Sitios arqueológicos</a></li>
+                    <li><a href="#">Festividades</a></li>
+                </ul>
+            </div>
+
+            <!-- Botón Naturaleza -->
+            <div class="boton-container">
+                <a href="#" class="boton" data-bg="naturaleza2.jpg">Naturaleza</a>
+                <ul class="submenu submenu-right">
+                    <li><a href="#">Avistamiento de fauna</a></li>
+                    <li><a href="#">Navegación</a></li>
+                </ul>
+            </div>
+
+            <!-- Botón Gastronomía -->
+            <div class="boton-container">
+                <a href="#" class="boton" data-bg="gastronomia3.jpg">Gastronomía</a>
+                <ul class="submenu submenu-left">
+                    <li><a href="#">Platos típicos</a></li>
+                    <li><a href="#">Restaurantes</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para manejar el fondo dinámico y los submenús -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const botones = document.querySelectorAll('.boton');
+            const backgroundImage = document.getElementById('background-image');
+            const submenus = document.querySelectorAll('.submenu');
+
+            // Imagen de fondo por defecto
+            const imagenDefault = "aventura3.jpg";
+            backgroundImage.style.backgroundImage = `url(${imagenDefault})`;
+            backgroundImage.style.opacity = '1';
+
+            botones.forEach((boton) => {
+                const botonContainer = boton.parentElement; // Contenedor del botón
+                const submenu = botonContainer.querySelector('.submenu'); // Submenú asociado
+
+                // Cambiar la imagen de fondo al pasar el cursor sobre el botón
+                boton.addEventListener('mouseenter', () => {
+                    const imagen = boton.getAttribute('data-bg');
+                    if (imagen) {
+                        backgroundImage.style.backgroundImage = `url(${imagen})`;
+                        backgroundImage.style.opacity = '1';
+                    }
+
+                    // Oculta todos los submenús primero
+                    submenus.forEach(sub => sub.style.display = 'none');
+                    // Muestra el submenú asociado al botón
+                    if (submenu) {
+                        submenu.style.display = 'block';
+                    }
+                });
+
+                // Restaurar la imagen de fondo por defecto al salir del botón
+                boton.addEventListener('mouseleave', () => {
+                    backgroundImage.style.backgroundImage = `url(${imagenDefault})`;
+                    backgroundImage.style.opacity = '1';
+                });
+
+                // Mantener el submenú visible si el cursor está sobre él
+                if (submenu) {
+                    submenu.addEventListener('mouseenter', () => {
+                        submenu.style.display = 'block';
+                    });
+
+                    submenu.addEventListener('mouseleave', () => {
+                        submenu.style.display = 'none';
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

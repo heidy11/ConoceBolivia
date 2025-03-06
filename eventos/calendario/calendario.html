@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Bolivia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="calendario">
+        <div id="header">
+            <button id="prev">&#9665;</button>
+            <h2 id="mesAno"></h2>
+            <button id="next">&#9655;</button>
+        </div>
+        <div id="diasSemana">
+            <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div>
+            <div>Jue</div><div>Vie</div><div>Sáb</div>
+        </div>
+        <div id="dias"></div>
+        <div id="eventoInfo"></div>
+    </div>
+    <script>
+        const eventos = {
+            //ENERO
+            '2025-01-22': 'Fundación del Estado Plurinacional',
+            '2025-01-24': 'Inaguracion de la Alasita',
+            //febrero
+            '2025-02-10': 'Revolución de Oruro',
+            
+            '2025-05-01': 'Día del Trabajador',
+            '2025-06-21': 'Año Nuevo Andino',
+            '2025-08-06': 'Día de la Independencia',
+            '2025-11-02': 'Día de los Difuntos',
+            '2025-12-25': 'Navidad'
+        };
+
+        const diasDiv = document.getElementById('dias');
+        const mesAno = document.getElementById('mesAno');
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+        const eventoInfo = document.getElementById('eventoInfo');
+        let fecha = new Date();
+
+        function cargarCalendario() {
+            diasDiv.innerHTML = '';
+            eventoInfo.innerHTML = 'Selecciona una fecha para ver detalles';
+            const mes = fecha.getMonth();
+            const ano = fecha.getFullYear();
+            mesAno.textContent = `${fecha.toLocaleString('es-ES', { month: 'long' })} ${ano}`;
+            const primerDiaMes = new Date(ano, mes, 1).getDay();
+            const ultimoDiaMes = new Date(ano, mes + 1, 0).getDate();
+            diasDiv.style.gridTemplateRows = `repeat(6, 1fr)`;
+
+            for (let i = 0; i < primerDiaMes; i++) {
+                diasDiv.innerHTML += '<div class="vacio"></div>';
+            }
+
+            for (let dia = 1; dia <= ultimoDiaMes; dia++) {
+                const fechaStr = `${ano}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+                const evento = eventos[fechaStr] ? eventos[fechaStr] : '';
+                const clase = eventos[fechaStr] ? 'evento' : '';
+                diasDiv.innerHTML += `<div class="${clase}" onclick="mostrarEvento('${evento}')">${dia}</div>`;
+            }
+        }
+
+        function mostrarEvento(evento) {
+            eventoInfo.textContent = evento ? `Evento: ${evento}` : 'No hay eventos en esta fecha';
+        }
+
+        prev.addEventListener('click', () => {
+            fecha.setMonth(fecha.getMonth() - 1);
+            cargarCalendario();
+        });
+
+        next.addEventListener('click', () => {
+            fecha.setMonth(fecha.getMonth() + 1);
+            cargarCalendario();
+        });
+
+        cargarCalendario();
+    </script>
+</body>
+</html>
