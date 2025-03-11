@@ -18,94 +18,160 @@
         <div class="botones">
             <!-- Botón Aventura -->
             <div class="boton-container">
-                <a href="#" class="boton" data-bg="aventura3.jpg">Aventura</a>
+                <a href="#" class="boton" data-bg="aventura3.jpg">AVENTURA</a>
                 <ul class="submenu submenu-right">
-                    <li><a href="https://www.scribd.com/doc/276843470/Menu-Desplegable-Con-CSS-y-HTML">Descenso en bicicleta</a></li>
+                    <li><a href="#">Descenso en bicicleta</a></li>
                     <li><a href="#">Escalada</a></li>
                     <li><a href="#">Trekking</a></li>
+                    <li><a href="#">Caminata</a></li>
+                    <li><a href="">Trekking</a></li>
+                    <li><a href="#">Caminata</a></li>
+                    
+                 
                 </ul>
             </div>
 
             <!-- Botón Culturas -->
             <div class="boton-container">
-                <a href="actividades.html" class="boton" data-bg="cultura3.jpg">Culturas</a>
+                <a href="actividades.html" class="boton" data-bg="cultura3.jpg">CULTURA</a>
                 <ul class="submenu submenu-left">
-                    <li><a href="#">Sitios arqueológicos</a></li>
+                    <li><a href="Cultura/si-arqueo.html">Sitios arqueológicos</a></li>
+                    <li><a href="#">Museos</a></li>
                     <li><a href="#">Festividades</a></li>
                 </ul>
             </div>
 
             <!-- Botón Naturaleza -->
             <div class="boton-container">
-                <a href="#" class="boton" data-bg="naturaleza2.jpg">Naturaleza</a>
+                <a href="#" class="boton" data-bg="naturaleza2.jpg">NATURALEZA</a>
                 <ul class="submenu submenu-right">
                     <li><a href="#">Avistamiento de fauna</a></li>
+                    <li><a href="#">Caminatas</a></li>
                     <li><a href="#">Navegación</a></li>
+
                 </ul>
             </div>
 
             <!-- Botón Gastronomía -->
             <div class="boton-container">
-                <a href="#" class="boton" data-bg="gastronomia3.jpg">Gastronomía</a>
+                <a href="#" class="boton" data-bg="gastronomia3.jpg">GASTRONOMIA</a>
                 <ul class="submenu submenu-left">
                     <li><a href="#">Platos típicos</a></li>
-                    <li><a href="#">Restaurantes</a></li>
+                    <li><a href="#">Restaurantes Recomendados</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
     <!-- Script para manejar el fondo dinámico y los submenús -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const botones = document.querySelectorAll('.boton');
-            const backgroundImage = document.getElementById('background-image');
-            const submenus = document.querySelectorAll('.submenu');
+   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const botones = document.querySelectorAll('.boton');
+    const backgroundImage = document.getElementById('background-image');
+    const submenus = document.querySelectorAll('.submenu');
 
-            // Imagen de fondo por defecto
-            const imagenDefault = "aventura3.jpg";
-            backgroundImage.style.backgroundImage = `url(${imagenDefault})`;
-            backgroundImage.style.opacity = '1';
+    // Imagen de fondo por defecto
+    const imagenDefault = "aventura3.jpg";
+    backgroundImage.style.backgroundImage = `url(${imagenDefault})`;
+    backgroundImage.style.opacity = '1';
 
-            botones.forEach((boton) => {
-                const botonContainer = boton.parentElement; // Contenedor del botón
-                const submenu = botonContainer.querySelector('.submenu'); // Submenú asociado
+    let imagenActual = imagenDefault;
+    let enSubmenu = false;
+    let botonActivo = null;
 
-                // Cambiar la imagen de fondo al pasar el cursor sobre el botón
-                boton.addEventListener('mouseenter', () => {
-                    const imagen = boton.getAttribute('data-bg');
-                    if (imagen) {
-                        backgroundImage.style.backgroundImage = `url(${imagen})`;
-                        backgroundImage.style.opacity = '1';
-                    }
+    botones.forEach((boton) => {
+        const botonContainer = boton.parentElement;
+        const submenu = botonContainer.querySelector('.submenu');
 
-                    // Oculta todos los submenús primero
-                    submenus.forEach(sub => sub.style.display = 'none');
-                    // Muestra el submenú asociado al botón
-                    if (submenu) {
-                        submenu.style.display = 'block';
-                    }
-                });
+        if (submenu) {
+            const items = submenu.querySelectorAll('li');
+            const middleIndex = Math.floor(items.length / 2);
+            const middleItem = items[middleIndex];
 
-                // Restaurar la imagen de fondo por defecto al salir del botón
-                boton.addEventListener('mouseleave', () => {
+            if (middleItem) {
+                const middleItemHeight = middleItem.offsetHeight;
+                const offset = middleIndex * middleItemHeight;
+
+                submenu.style.top = `calc(50% - ${offset}px)`;
+
+                if (submenu.classList.contains('submenu-right')) {
+                    submenu.style.left = '100%';
+                    submenu.style.transform = 'translate(10px, -50%)';
+                } else if (submenu.classList.contains('submenu-left')) {
+                    submenu.style.right = '100%';
+                    submenu.style.transform = 'translate(-10px, -50%)';
+                }
+            }
+        }
+
+        let timeoutId;
+
+        // Cambiar la imagen y marcar el botón activo
+        boton.addEventListener('mouseenter', () => {
+            clearTimeout(timeoutId);
+
+            const imagen = boton.getAttribute('data-bg');
+            if (imagen && imagen !== imagenActual) {
+                imagenActual = imagen;
+                backgroundImage.style.backgroundImage = `url(${imagen})`;
+                backgroundImage.style.opacity = '1';
+            }
+
+            // Resaltar botón activo
+            if (botonActivo) {
+                botonActivo.classList.remove('activo');
+            }
+            boton.classList.add('activo');
+            botonActivo = boton;
+
+            // Mostrar submenú
+            submenus.forEach(sub => sub.style.display = 'none');
+            if (submenu) {
+                submenu.style.display = 'block';
+            }
+        });
+
+        // Mantener el botón resaltado si está en el submenú
+        if (submenu) {
+            submenu.addEventListener('mouseenter', () => {
+                clearTimeout(timeoutId);
+                submenu.style.display = 'block';
+                enSubmenu = true;
+                boton.classList.add('activo');
+            });
+
+            submenu.addEventListener('mouseleave', () => {
+                enSubmenu = false;
+                verificarImagen();
+            });
+        }
+
+        // Verificar si se debe cambiar la imagen y quitar el resaltado
+        function verificarImagen() {
+            setTimeout(() => {
+                if (!document.querySelector('.boton:hover') && !enSubmenu) {
+                    imagenActual = imagenDefault;
                     backgroundImage.style.backgroundImage = `url(${imagenDefault})`;
                     backgroundImage.style.opacity = '1';
-                });
 
-                // Mantener el submenú visible si el cursor está sobre él
-                if (submenu) {
-                    submenu.addEventListener('mouseenter', () => {
-                        submenu.style.display = 'block';
-                    });
-
-                    submenu.addEventListener('mouseleave', () => {
-                        submenu.style.display = 'none';
-                    });
+                    if (botonActivo) {
+                        botonActivo.classList.remove('activo');
+                        botonActivo = null;
+                    }
                 }
-            });
+            }, 700);
+        }
+
+        // Restaurar la imagen solo si no hay botones o submenús activos
+        boton.addEventListener('mouseleave', () => {
+            timeoutId = setTimeout(() => {
+                verificarImagen();
+            }, 300);
         });
-    </script>
+    });
+});
+
+   </script>
 
 </body>
 </html>

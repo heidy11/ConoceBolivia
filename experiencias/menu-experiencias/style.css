@@ -42,10 +42,13 @@ body {
     left: 0;
     opacity: 1;
 }
+#background-image {
+    transition: opacity 1.5s ease-in-out, background-image 1.5s ease-in-out;
+}
 
 /* Caja de navegación totalmente transparente */
 .caja-navegacion {
-    width: 100%;
+    width: 100vh;
     max-width: 900px;
     height: auto;
     background: transparent;
@@ -84,16 +87,23 @@ body {
     transition: all 0.5s ease-in-out;
     display: inline-block;
     font-weight: bold;
-    text-transform: uppercase;
+    text-transform:uppercase;
     position: relative;
     overflow: hidden;
 }
+.boton.activo {
+    background: white;
+    color: #1b0b42;
+    transform: scale(1);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
 
 /* Efecto al pasar el mouse */
 .boton:hover {
-    background: white;
+    background: rgb(255, 255, 255);
     color: #1b0b42;
-    transform: scale(1.2);
+    transform: scale(1.1);
     box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
 }
 
@@ -102,8 +112,9 @@ body {
     display: none;
     position: absolute;
     top: 100%;
+    transform: translateX(-50%);
     background:rgb(250, 250, 250);
-    border-radius: 50px;
+    border-radius: 20px;
     width: max-content;
     padding: 10px;
     z-index: 1;
@@ -115,7 +126,7 @@ body {
 }
 
 .submenu li a {
-    color: rgb(9, 8, 8);
+    color: #5d358b;
     padding: 10px;
     display: block;
     text-decoration: none;
@@ -123,16 +134,15 @@ body {
 }
 /*selccion del submenu*/
 .submenu li a:hover {
-    background-color: rgba(249, 0, 0, 0.2);
+    background-color: #009ee3;
     color: rgb(16, 16, 23);
-    border-radius: 50px;
+    border-radius: 15px;
 }
 
 /* Submenú a la derecha del botón */
 .submenu-right {
     left: 100%;
-    top: 0;
-
+   transform: translate(10px, -50%);
 }
 
 /* Submenú a la izquierda del botón */
@@ -146,14 +156,12 @@ body {
     .caja-navegacion {
         width: 90vw;
     }
-
     .boton {
         width: 80%;
         font-size: 1.2rem;
         padding: 12px 20px;
     }
 }
-
 @media (max-width: 480px) {
     .boton {
         width: 90%;
