@@ -13,35 +13,31 @@
         <div class="bg-cover bg-center bg-no-repeat w-full h-full" id="background-image"></div>
     </div>
 
-    <!-- Caja de navegación -->
+    
     <div class="caja-navegacion">
         <div class="botones">
-            <!-- Botón Aventura -->
+            
             <div class="boton-container">
                 <a href="#" class="boton" data-bg="aventura3.jpg">AVENTURA</a>
                 <ul class="submenu submenu-right">
-                    <li><a href="#">Descenso en bicicleta</a></li>
-                    <li><a href="#">Escalada</a></li>
-                    <li><a href="#">Trekking</a></li>
-                    <li><a href="#">Caminata</a></li>
-                    <li><a href="">Trekking</a></li>
-                    <li><a href="#">Caminata</a></li>
-                    
-                 
+                    <li><a href="aventura/descenso.html">Descenso en bicicleta</a></li>
+                    <li><a href="aventura/escalada.html">Escalada</a></li>
+                    <li><a href="aventura/trekking.html">Trekking</a></li>
+
                 </ul>
             </div>
 
-            <!-- Botón Culturas -->
+          
             <div class="boton-container">
                 <a href="actividades.html" class="boton" data-bg="cultura3.jpg">CULTURA</a>
                 <ul class="submenu submenu-left">
-                    <li><a href="Cultura/si-arqueo.html">Sitios arqueológicos</a></li>
-                    <li><a href="#">Museos</a></li>
-                    <li><a href="#">Festividades</a></li>
+                    <li><a href="cultura/si-arqueo.html">Sitios arqueológicos</a></li>
+                    <li><a href="cultura/museos.html">Museos</a></li>
+                    <li><a href="cultura/festi.html">Festividades</a></li>
                 </ul>
             </div>
 
-            <!-- Botón Naturaleza -->
+    
             <div class="boton-container">
                 <a href="#" class="boton" data-bg="naturaleza2.jpg">NATURALEZA</a>
                 <ul class="submenu submenu-right">
@@ -52,7 +48,7 @@
                 </ul>
             </div>
 
-            <!-- Botón Gastronomía -->
+            
             <div class="boton-container">
                 <a href="#" class="boton" data-bg="gastronomia3.jpg">GASTRONOMIA</a>
                 <ul class="submenu submenu-left">
@@ -63,14 +59,13 @@
         </div>
     </div>
 
-    <!-- Script para manejar el fondo dinámico y los submenús -->
+   
    <script>
     document.addEventListener('DOMContentLoaded', function () {
     const botones = document.querySelectorAll('.boton');
     const backgroundImage = document.getElementById('background-image');
     const submenus = document.querySelectorAll('.submenu');
 
-    // Imagen de fondo por defecto
     const imagenDefault = "aventura3.jpg";
     backgroundImage.style.backgroundImage = `url(${imagenDefault})`;
     backgroundImage.style.opacity = '1';
@@ -106,7 +101,6 @@
 
         let timeoutId;
 
-        // Cambiar la imagen y marcar el botón activo
         boton.addEventListener('mouseenter', () => {
             clearTimeout(timeoutId);
 
@@ -117,59 +111,53 @@
                 backgroundImage.style.opacity = '1';
             }
 
-            // Resaltar botón activo
             if (botonActivo) {
                 botonActivo.classList.remove('activo');
             }
             boton.classList.add('activo');
             botonActivo = boton;
 
-            // Mostrar submenú
             submenus.forEach(sub => sub.style.display = 'none');
             if (submenu) {
                 submenu.style.display = 'block';
             }
         });
 
-        // Mantener el botón resaltado si está en el submenú
         if (submenu) {
             submenu.addEventListener('mouseenter', () => {
                 clearTimeout(timeoutId);
-                submenu.style.display = 'block';
                 enSubmenu = true;
+                submenu.style.display = 'block';
                 boton.classList.add('activo');
             });
 
             submenu.addEventListener('mouseleave', () => {
                 enSubmenu = false;
-                verificarImagen();
+                setTimeout(verificarImagen, 200);
             });
         }
 
-        // Verificar si se debe cambiar la imagen y quitar el resaltado
         function verificarImagen() {
-            setTimeout(() => {
-                if (!document.querySelector('.boton:hover') && !enSubmenu) {
-                    imagenActual = imagenDefault;
-                    backgroundImage.style.backgroundImage = `url(${imagenDefault})`;
-                    backgroundImage.style.opacity = '1';
+            if (!document.querySelector('.boton:hover') && !document.querySelector('.submenu:hover')) {
+                imagenActual = imagenDefault;
+                backgroundImage.style.backgroundImage = `url(${imagenDefault})`;
+                backgroundImage.style.opacity = '1';
 
-                    if (botonActivo) {
-                        botonActivo.classList.remove('activo');
-                        botonActivo = null;
-                    }
+                if (botonActivo) {
+                    botonActivo.classList.remove('activo');
+                    botonActivo = null;
                 }
-            }, 700);
+
+                submenus.forEach(sub => sub.style.display = 'none');
+            }
         }
 
-        // Restaurar la imagen solo si no hay botones o submenús activos
         boton.addEventListener('mouseleave', () => {
-            timeoutId = setTimeout(() => {
-                verificarImagen();
-            }, 300);
+            timeoutId = setTimeout(verificarImagen, 300);
         });
     });
 });
+
 
    </script>
 

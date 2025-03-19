@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Formulario de contacto</title>
+</head>
+<body>
+        <div class="container">
+        <h2>Contacto</h2>
+        <form>
+            <label for="name">Nombre Completo</label>
+            <div class="input-group">        
+                <input type="text" id="name" name="name" placeholder="Ingresa tu nombre completo" required>
+            </div>  <br>
+
+            <label for="email">Correo Electrónico</label>
+            <div class="input-group">
+                <input type="email" id="email" name="email" placeholder="Ingresa tu correo electronico" required>
+            </div> <br>
+            
+            <label for="country">País de Residencia</label>
+            <div class="input-group">
+                <input type="text" id="country" name="country" placeholder="Ingresa tu pais de residencia" required>
+            </div><br>
+            <label for="name">¿Por qué elegiste Bolivia?</label>
+            <div class="input-group">        
+                <input type="text" id="name" name="name" placeholder="Ingresa tu opinion" required>
+            </div>  <br>
+
+            <label for="source">¿Cómo nos encontraste?</label>
+            <div class="input-group">    
+                <select id="source" name="source">
+                    <option value=""></option>
+                    <option value="google">Google</option>
+                    <option value="redes">Redes Sociales</option>
+                    <option value="recomendacion">Recomendaciones</option>
+                    <option value="anuncio">Anuncios</option>
+                </select>
+            </div><br>
+            
+            <label for="reason">Motivo de Contacto</label>
+            <div class="input-group">
+                <select id="reason" name="reason" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="consulta">Consulta General</option>
+                    <option value="informacion">Información Turística</option>
+                    <option value="recomendaciones">Recomendaciones de Viaje</option>
+                    <option value="colaboraciones">Colaboraciones</option>
+                </select>
+            </div>  <br>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="newsletter" name="newsletter" >
+                <label for="newsletter">Quiero recibir eventos y fechas importantes en mi correo electronico</label>
+            </div>
+            <button type="submit" >Enviar Mensaje</button>
+        </form>
+    </div>
+</body>
+</html>
